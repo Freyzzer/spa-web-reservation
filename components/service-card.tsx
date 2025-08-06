@@ -20,7 +20,7 @@ interface ServiceCardProps {
   formatPrice: (price: number) => string
 }
 
-export function ServiceCard({ service, onBook, formatPrice }: ServiceCardProps) {
+export function ServiceCard({ service, onBook, formatPrice }: Readonly<ServiceCardProps>) {
   return (
     <Card className="overflow-hidden gap-3 hover:shadow-2xl hover:-translate-y-3 transition-all duration-700 bg-white/80 backdrop-blur-sm border-blue-100 group">
       <div className="aspect-video relative overflow-hidden">
