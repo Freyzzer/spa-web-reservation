@@ -10,7 +10,7 @@ export default function ScheduleSection() {
           <section className="mb-16">
             <Card className="max-w-2xl mx-auto bg-white/80 backdrop-blur-sm border-blue-100 hover:shadow-xl hover:scale-105 transition-all duration-500">
               <CardHeader className="text-center">
-                <CardTitle className="flex mt-5items-center justify-center gap-2">
+                <CardTitle className="flex mt-5items-center justify-center mt-6 gap-2">
                   <Clock className="h-5 w-5 text-blue-600 animate-spin" />
                   Horarios de Atención
                 </CardTitle>

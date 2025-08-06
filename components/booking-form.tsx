@@ -27,7 +27,7 @@ interface BookingFormProps {
   }
 }
 
-export function BookingForm({ service, spaInfo }: BookingFormProps) {
+export function BookingForm({ service, spaInfo }: Readonly<BookingFormProps>) {
   const [currentStep, setCurrentStep] = useState(1)
   const [formData, setFormData] = useState({
     date: "",
@@ -281,8 +281,8 @@ export function BookingForm({ service, spaInfo }: BookingFormProps) {
               <div className="space-y-2">
                 <h4 className="font-medium text-sm">Beneficios:</h4>
                 <div className="flex flex-wrap gap-1">
-                  {service.benefits.map((benefit, idx) => (
-                    <Badge key={idx} variant="outline" className="text-xs">
+                  {service.benefits.map((benefit) => (
+                    <Badge key={benefit} variant="outline" className="text-xs">
                       {benefit}
                     </Badge>
                   ))}
