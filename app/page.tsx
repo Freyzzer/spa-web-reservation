@@ -1,103 +1,126 @@
-import Image from "next/image";
+'use client';
+
+import { AnimatedSection } from "@/components/animated-section";
+import { BookingForm } from "@/components/booking-form";
+import { CertificationsSection } from "@/components/certifications-section";
+import InfoSection from "@/components/info-section";
+import ScheduleSection from "@/components/schedule-section";
+import { ScrollProgress } from "@/components/scroll-progress";
+import ServicesSection from "@/components/services-section";
+import { TestimonialsSection } from "@/components/testimonials-section";
+import TherapistSection from "@/components/therapist-section";
+import { Button } from "@/components/ui/button";
+import { SPAINFO } from "@/lib/constants/constants";
+import {Leaf, MapPin, Phone, Star} from "lucide-react";
+import { useState } from "react";
+
 
 export default function Home() {
-  return (
-    <div className="font-sans grid grid-rows-[20px_1fr_20px] items-center justify-items-center min-h-screen p-8 pb-20 gap-16 sm:p-20">
-      <main className="flex flex-col gap-[32px] row-start-2 items-center sm:items-start">
-        <Image
-          className="dark:invert"
-          src="/next.svg"
-          alt="Next.js logo"
-          width={180}
-          height={38}
-          priority
-        />
-        <ol className="font-mono list-inside list-decimal text-sm/6 text-center sm:text-left">
-          <li className="mb-2 tracking-[-.01em]">
-            Get started by editing{" "}
-            <code className="bg-black/[.05] dark:bg-white/[.06] font-mono font-semibold px-1 py-0.5 rounded">
-              app/page.tsx
-            </code>
-            .
-          </li>
-          <li className="tracking-[-.01em]">
-            Save and see your changes instantly.
-          </li>
-        </ol>
+ const [selectedService, setSelectedService] = useState<any>(null);
+  const [showBookingForm, setShowBookingForm] = useState(false);
 
-        <div className="flex gap-4 items-center flex-col sm:flex-row">
-          <a
-            className="rounded-full border border-solid border-transparent transition-colors flex items-center justify-center bg-foreground text-background gap-2 hover:bg-[#383838] dark:hover:bg-[#ccc] font-medium text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5 sm:w-auto"
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <Image
-              className="dark:invert"
-              src="/vercel.svg"
-              alt="Vercel logomark"
-              width={20}
-              height={20}
-            />
-            Deploy now
-          </a>
-          <a
-            className="rounded-full border border-solid border-black/[.08] dark:border-white/[.145] transition-colors flex items-center justify-center hover:bg-[#f2f2f2] dark:hover:bg-[#1a1a1a] hover:border-transparent font-medium text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5 w-full sm:w-auto md:w-[158px]"
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Read our docs
-          </a>
-        </div>
+  const handleBookService = (service: any) => {
+    setSelectedService(service);
+    setShowBookingForm(true);
+  };
+
+  const formatPrice = (price: number) => {
+    return new Intl.NumberFormat("es-CO", {
+      style: "currency",
+      currency: "COP",
+      minimumFractionDigits: 0,
+    }).format(price);
+  };
+
+
+   
+if (showBookingForm) {
+    return (
+      <div className="min-h-screen bg-gradient-to-br from-blue-50 to-green-50">
+        <ScrollProgress />
+        <header className="bg-white/80 backdrop-blur-sm border-b border-blue-100">
+          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6">
+            <div className="flex items-center justify-between">
+              <Button
+                variant="ghost"
+                onClick={() => setShowBookingForm(false)}
+                className="text-blue-600 hover:text-blue-700 hover:scale-105 transition-all duration-300"
+              >
+                ← Volver a servicios
+              </Button>
+              <div className="text-center">
+                <div className="flex items-center justify-center gap-2 mb-2">
+                  <Leaf className="h-6 w-6 text-blue-600 animate-pulse" />
+                  <h1 className="text-2xl font-bold text-gray-900">Spa Zen</h1>
+                </div>
+                <p className="text-gray-600">Reservar: {selectedService?.name}</p>
+              </div>
+              <div></div>
+            </div>
+          </div>
+        </header>
+
+        <main className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+          <BookingForm service={selectedService} spaInfo={SPAINFO} />
+        </main>
+      </div>
+    )
+  }
+
+  return (
+    <div>
+      <ScrollProgress />
+      {/* Header */}
+      <AnimatedSection animation="fadeIn">
+        <header className="bg-white/80 backdrop-blur-sm border-b border-blue-100">
+          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+            <div className="text-center">
+              <div className="flex items-center justify-center gap-3 mb-4">
+                <div className="p-3 bg-blue-100 rounded-full hover:scale-110 hover:rotate-12 transition-all duration-500">
+                  <Leaf className="h-8 w-8 text-blue-600" />
+                </div>
+                <h1 className="text-4xl font-bold text-gray-900 hover:text-blue-600 transition-colors duration-500">
+                  Spa Zen
+                </h1>
+              </div>
+              <p className="text-xl text-gray-600 max-w-2xl mx-auto mb-6">{SPAINFO.description}</p>
+              <div className="flex items-center justify-center gap-6 text-sm text-gray-500">
+                <div className="flex items-center gap-2 hover:text-blue-600 hover:scale-105 transition-all duration-300">
+                  <MapPin className="h-4 w-4" />
+                  {SPAINFO.address}
+                </div>
+                <div className="flex items-center gap-2 hover:text-green-600 hover:scale-105 transition-all duration-300">
+                  <Phone className="h-4 w-4" />
+                  {SPAINFO.phone}
+                </div>
+                <div className="flex items-center gap-2 hover:text-yellow-600 hover:scale-105 transition-all duration-300">
+                  <Star className="h-4 w-4 fill-yellow-400 text-yellow-400" />
+                  {SPAINFO.rating}
+                </div>
+              </div>
+            </div>
+          </div>
+        </header>
+      </AnimatedSection>
+      <main className="max-w-7xl mx-auto sm:px-6 lg:px-8 py-12">
+        {/* Sección de Experiencia y Credibilidad */}
+        <InfoSection />
+
+        {/* Servicios */}
+       <ServicesSection handleBookService={handleBookService} formatPrice={formatPrice} />
+
+        {/* Horarios */}
+        <ScheduleSection />
+
+        {/* Terapeutas */}
+        <TherapistSection />
+
+        {/* Testimonios */}
+        <TestimonialsSection />
+
+        {/* Certificaciones */}
+        <CertificationsSection />
       </main>
-      <footer className="row-start-3 flex gap-[24px] flex-wrap items-center justify-center">
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/file.svg"
-            alt="File icon"
-            width={16}
-            height={16}
-          />
-          Learn
-        </a>
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/window.svg"
-            alt="Window icon"
-            width={16}
-            height={16}
-          />
-          Examples
-        </a>
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://nextjs.org?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/globe.svg"
-            alt="Globe icon"
-            width={16}
-            height={16}
-          />
-          Go to nextjs.org →
-        </a>
-      </footer>
     </div>
   );
 }
